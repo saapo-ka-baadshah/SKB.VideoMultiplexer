@@ -33,7 +33,7 @@
       "credentials": [
         {
           "type": "password",
-          "value": "Qp/PaDV6BuMLnpEQhCGoj/kVUrpOwdRZ",
+          "value": "32se3/wAkZO9CwF0MnflWwNMpxosmXxi",
           "temporary": false
         }
       ],
@@ -67,12 +67,12 @@
       "name": "VideoMultiplexer App",
       "enabled": true,
       "protocol": "openid-connect",
-      "publicClient": false,
+      "publicClient": true,
       "standardFlowEnabled": true,
       "serviceAccountsEnabled": true,
       "directAccessGrantsEnabled": true,
       "clientAuthenticatorType": "client-secret",
-      "secret": "OqytLxF9+6M6GrxwiuHkUik51fTUY5saFOcsyPYNL1Y=",
+      "secret": "2J5oE4NxZBeRn4uNpEvDr7Lfov1paRmOgOWxsySUNHs=",
       "redirectUris": [
         "http://localhost:5000/*",
         "http://localhost:3000/*"

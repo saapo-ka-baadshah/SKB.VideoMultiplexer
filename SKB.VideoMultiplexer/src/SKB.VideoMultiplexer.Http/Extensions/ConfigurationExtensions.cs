@@ -1,8 +1,6 @@
 ﻿using System.Reflection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 
-namespace SKB.App.SKB.VideoMultiplexer.Console.Extensions;
+namespace SKB.App.SKB.VideoMultiplexer.Http.Extensions;
 
 /// <summary>
 /// Extends the Builder Extensions for Configuration
@@ -23,10 +21,11 @@ public static class ConfigurationExetensions
                 Directory.GetParent(Path.GetFullPath(Assembly.GetExecutingAssembly().Location))!.ToString()
             )
         );
+        builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly(), optional: true);
         return builder;
     }
 
-    private static IHostApplicationBuilder AddConfigurationsFromJsonFile(IHostApplicationBuilder builder,
+    private static void AddConfigurationsFromJsonFile(IHostApplicationBuilder builder,
         string basePath)
     {
         builder.Configuration.SetBasePath(basePath)
@@ -34,10 +33,9 @@ public static class ConfigurationExetensions
 
         if (!builder.Environment.IsProduction())
         {
+	        string environmentName = builder.Environment.EnvironmentName.ToLower();
             builder.Configuration.SetBasePath(basePath)
-                .AddJsonFile($"appsettings.{builder.Environment}.json");
+                .AddJsonFile($"appsettings.{environmentName}.json");
         }
-
-        return builder;
     }
 }

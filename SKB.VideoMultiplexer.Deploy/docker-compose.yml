@@ -58,24 +58,24 @@ services:
       timeout: 5s
       retries: 5
 
-  skb-videomultiplexer-http:
-    image: ${DOCKER_REGISTRY:-ghcr.io}/${DOCKER_NAMESPACE:-skb}/skb-videomultiplexer-http:${APP_VERSION:-latest}
-    container_name: skb-videomultiplexer-http
-    restart: unless-stopped
-    build:
-      context: ../SKB.VideoMultiplexer
-      dockerfile: src/SKB.VideoMultiplexer.Http/Dockerfile
-    depends_on:
-      keycloak:
-        condition: service_healthy
-    environment:
-      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
-      ASPNETCORE_URLS: http://+:5000
-      Authentication__Schemes__OpenIdConnect__Authority: http://keycloak:8080/realms/${KC_REALM:-skb-videomultiplexer}
-      Authentication__Schemes__OpenIdConnect__ClientId: ${KC_CLIENT_ID:-skb-videomultiplexer}
-      Authentication__Schemes__OpenIdConnect__ClientSecret: ${KC_CLIENT_SECRET:-}
-      Authentication__Schemes__OpenIdConnect__RequireHttpsMetadata: "false"
-    ports:
-      - "${APP_PORT:-5000}:5000"
-    networks:
-      - multiplexer-net
+#  skb-videomultiplexer-http:
+#    image: ${DOCKER_REGISTRY:-ghcr.io}/${DOCKER_NAMESPACE:-skb}/skb-videomultiplexer-http:${APP_VERSION:-latest}
+#    container_name: skb-videomultiplexer-http
+#    restart: unless-stopped
+#    build:
+#      context: ../SKB.VideoMultiplexer
+#      dockerfile: src/SKB.VideoMultiplexer.Http/Dockerfile
+#    depends_on:
+#      keycloak:
+#        condition: service_healthy
+#    environment:
+#      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
+#      ASPNETCORE_URLS: http://+:5000
+#      Authentication__Schemes__OpenIdConnect__Authority: http://keycloak:8080/realms/${KC_REALM:-skb-videomultiplexer}
+#      Authentication__Schemes__OpenIdConnect__ClientId: ${KC_CLIENT_ID:-skb-videomultiplexer}
+#      Authentication__Schemes__OpenIdConnect__ClientSecret: ${KC_CLIENT_SECRET:-}
+#      Authentication__Schemes__OpenIdConnect__RequireHttpsMetadata: "false"
+#    ports:
+#      - "${APP_PORT:-5000}:5000"
+#    networks:
+#      - multiplexer-net

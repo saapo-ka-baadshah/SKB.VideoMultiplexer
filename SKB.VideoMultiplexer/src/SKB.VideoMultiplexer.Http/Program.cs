@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
-using Microsoft.Extensions.Hosting;
-using SKB.App.SKB.VideoMultiplexer.Console.Extensions;
+using Microsoft.OpenApi.Models;
+using SKB.App.SKB.VideoMultiplexer.Http.Extensions;
+using SKB.Core.Hosting.Extensions.WebApi;
 
 namespace SKB.App.SKB.VideoMultiplexer.Http;
 
@@ -20,10 +21,32 @@ internal class Program
 
         // Add Configurations
         builder.AddConfigurations();
+        builder.Services.AddEndpointsApiExplorer();
+
+        // Add Authentication
+        builder.Services.AddAuth(builder.Configuration);
+
+        // Configure SwaggerGen by swashbuckle
+        builder.Services.AddSwaggerGenWithAuth(builder.Configuration);
 
         // Run the hosted application
-
         var app = builder.Build();
+
+        if (app.Environment.IsDevelopment())
+        {
+	        app.UseSwagger();
+	        app.UseSwaggerUI(options =>
+	        {
+		        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+	        });
+        }
+
+        app.UseRouting();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.AddEndpoints<Program>();
         app.Run();
     }
 }

@@ -10,20 +10,25 @@
             saapo-ka-baadshah;
         </Authors>
         <Description>Provisions a baseline console application template</Description>
-    </PropertyGroup>
+      <UserSecretsId>8ae208b4-0a24-4e7f-a067-ba807e7d72ba</UserSecretsId>
+  </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations"/>
-        <PackageReference Include="Microsoft.Extensions.Hosting"/>
-        <PackageReference Include="Microsoft.Extensions.Logging"/>
+        <PackageReference Include="JetBrains.Annotations" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" />
+        <PackageReference Include="Microsoft.Extensions.Logging" />
         <PackageReference Include="SKB.Core.EditorConfig">
             <IncludeAssets>Build</IncludeAssets>
             <PrivateAssets>All</PrivateAssets>
         </PackageReference>
+        <PackageReference Include="SKB.Core.Hosting" />
         <PackageReference Include="skb.core.licenseconfig">
             <PrivateAssets>All</PrivateAssets>
             <IncludeAssets>Build</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" />
     </ItemGroup>
 
     <ItemGroup>
