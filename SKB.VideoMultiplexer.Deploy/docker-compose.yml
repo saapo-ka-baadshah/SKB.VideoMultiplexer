@@ -1,0 +1,81 @@
+volumes:
+  postgres_data:
+  keycloak_data:
+
+networks:
+  multiplexer-net:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: skb-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: ${KC_DB_PASSWORD:-changeme}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - multiplexer-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keycloak -d keycloak"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.1
+    container_name: skb-keycloak
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD:-changeme}
+      KC_HOSTNAME: localhost
+      KC_HTTP_PORT: 8080
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_ADMIN_USER:-admin}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_ADMIN_PASSWORD:-admin}
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "true"
+      KC_LOG_LEVEL: ${KC_LOG_LEVEL:-INFO}
+    ports:
+      - "${KC_PORT:-8080}:8080"
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+      - ./config/keycloak:/opt/keycloak/data/import:ro
+    networks:
+      - multiplexer-net
+    command: ["start-dev", "--import-realm"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  skb-videomultiplexer-http:
+    image: ${DOCKER_REGISTRY:-ghcr.io}/${DOCKER_NAMESPACE:-skb}/skb-videomultiplexer-http:${APP_VERSION:-latest}
+    container_name: skb-videomultiplexer-http
+    restart: unless-stopped
+    build:
+      context: ../SKB.VideoMultiplexer
+      dockerfile: src/SKB.VideoMultiplexer.Http/Dockerfile
+    depends_on:
+      keycloak:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
+      ASPNETCORE_URLS: http://+:5000
+      Authentication__Schemes__OpenIdConnect__Authority: http://keycloak:8080/realms/${KC_REALM:-skb-videomultiplexer}
+      Authentication__Schemes__OpenIdConnect__ClientId: ${KC_CLIENT_ID:-skb-videomultiplexer}
+      Authentication__Schemes__OpenIdConnect__ClientSecret: ${KC_CLIENT_SECRET:-}
+      Authentication__Schemes__OpenIdConnect__RequireHttpsMetadata: "false"
+    ports:
+      - "${APP_PORT:-5000}:5000"
+    networks:
+      - multiplexer-net
