@@ -1,0 +1,17 @@
+﻿<Project>
+    <PropertyGroup>
+        <NoWarn>NU1507</NoWarn>
+    </PropertyGroup>
+    <Choose>
+        <When Condition="$([System.Text.RegularExpressions.Regex]::IsMatch($(AssemblyName), '.*[.]Test(s|ing)$'))">
+            <PropertyGroup>
+<!--                Some Optional Warnings-->
+            </PropertyGroup>
+        </When>
+        <Otherwise>
+            <PropertyGroup>
+<!--                Other Optional Warnings-->
+            </PropertyGroup>
+        </Otherwise>
+    </Choose>
+</Project>

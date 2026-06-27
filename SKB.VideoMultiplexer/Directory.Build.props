@@ -1,0 +1,15 @@
+﻿<Project>
+    <PropertyGroup>
+        <RepositoryRoot>$([System.IO.Path]::GetDirectoryName($([MSBuild]::GetPathOfFileAbove('.gitignore', '$(MSBuildProjectDirectory)'))))</RepositoryRoot>
+        <RootNamespace>SKB.App.$(MSBuildProjectName)</RootNamespace>
+        <AssemblyName>SKB.App.$(MSBuildProjectName)</AssemblyName>
+        <BaseOutputPath>$(RepositoryRoot)/artifacts/bin/$(MSBuildProjectName)</BaseOutputPath>
+        <BaseIntermediateOutputPath>$(RepositoryRoot)/artifacts/obj/$(MSBuildProjectName)</BaseIntermediateOutputPath>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>12.0</LangVersion>
+        <WarningLevel>7</WarningLevel>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+</Project>
