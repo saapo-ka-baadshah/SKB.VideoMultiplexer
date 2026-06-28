@@ -1,0 +1,520 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --text-main: #2d3748;
+    --text-muted: #718096;
+    --border-color: #cbd5e0;
+    --bg-main: #f7fafc;
+    --card-bg: #ffffff;
+    --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans);
+    background-color: var(--bg-main) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.login-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Locale language switcher custom styling */
+.locale-selector {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 10;
+}
+
+#kc-locale-dropdown button {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#kc-locale-dropdown button:hover {
+    background-color: #edf2f7;
+    border-color: #a0aec0;
+}
+
+.locale-dropdown-menu {
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0.25rem 0 0 0;
+    position: absolute;
+    right: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    min-width: 120px;
+    display: none;
+    /* simple placeholder, standard browser drops down */
+}
+
+/* Login card style */
+.login-card-wrapper {
+    background: var(--card-bg);
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02), 0 2px 10px rgba(0, 0, 0, 0.01), 0 0 1px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    max-width: 480px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 2rem;
+}
+
+/* Branding Header */
+.brand-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2.25rem;
+}
+
+.brand-logo-container {
+    width: 96px;
+    height: 72px;
+    margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand-title {
+    font-family: var(--font-sans);
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: -0.02em;
+}
+
+.brand-title-blue {
+    color: #1a73e8;
+}
+
+.brand-title-gray {
+    color: #d1d5db;
+    /* outlines / light grey in mockup */
+    font-weight: 300;
+    margin-left: 0.05em;
+}
+
+.brand-subtitle {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    color: #4b5563;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+/* Form layouts */
+.kcFormGroup {
+    margin-bottom: 1.5rem;
+}
+
+.kcLabel {
+    display: block;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 0.5rem;
+}
+
+/* Inputs wrapper icons left */
+.input-with-icon-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon-left {
+    position: absolute;
+    left: 1.125rem;
+    color: #64748b;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.kcInput {
+    font-family: var(--font-sans);
+    width: 100%;
+    padding: 0.9375rem 1rem 0.9375rem 2.875rem;
+    font-size: 0.96875rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #1e293b;
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
+}
+
+.kcInput::placeholder {
+    color: #94a3b8;
+}
+
+.kcInput:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+}
+
+.kcInput.inputError {
+    border-color: #ef4444;
+}
+
+.kcInput.inputError:focus {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.08);
+}
+
+/* Password Toggle Eye Icon spacing */
+.password-input-wrapper .kcInput {
+    padding-right: 3rem;
+}
+
+.kcPasswordVisibilityButton {
+    position: absolute;
+    right: 1.125rem;
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    z-index: 5;
+    transition: color 0.15s ease;
+}
+
+.kcPasswordVisibilityButton:hover {
+    color: #334155;
+}
+
+.kcInputErrorMessage {
+    display: block;
+    font-size: 0.8125rem;
+    color: #ef4444;
+    margin-top: 0.375rem;
+    font-weight: 500;
+}
+
+/* Form Settings (Remember Me & Forgot Password) */
+.kcFormSetting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    font-size: 0.9375rem;
+}
+
+.kcCheckbox label {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    color: #4b5563;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 500;
+}
+
+.kcCheckbox input[type="checkbox"] {
+    width: 1.125rem;
+    height: 1.125rem;
+    accent-color: #2563eb;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.kcForgotPassword a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.15s ease;
+}
+
+.kcForgotPassword a:hover {
+    color: #1d4ed8;
+    text-decoration: none;
+}
+
+/* Submit Form Action Button */
+.kcSubmitButton {
+    font-family: var(--font-sans);
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.18);
+}
+
+.kcSubmitButton:hover {
+    background: #1d4ed8;
+    box-shadow: 0 4px 18px rgba(29, 78, 216, 0.25);
+    transform: translateY(-1px);
+}
+
+.kcSubmitButton:active {
+    transform: translateY(0);
+}
+
+.kcSubmitButton:disabled {
+    background: #93c5fd;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Redundant Passkey / WebAuth buttons spacing */
+.kcPasskeyButton {
+    font-family: var(--font-sans);
+    width: 100%;
+    padding: 0.9375rem 1.5rem;
+    background: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 0.96875rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.2s ease;
+}
+
+.kcPasskeyButton:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+/* Theme Errors alert banner list */
+.kcAlert {
+    padding: 0.9375rem 1.125rem;
+    border-radius: 12px;
+    font-size: 0.90625rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.kcAlertError {
+    background: #fef2f2;
+    border: 1px solid #fee2e2;
+    color: #991b1b;
+}
+
+.kcAlertSuccess {
+    background: #ecfdf5;
+    border: 1px solid #d1fae5;
+    color: #065f46;
+}
+
+/* Footer structure */
+.login-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    text-align: left;
+}
+
+.footer-logo-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid #0066FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    opacity: 0.85;
+}
+
+.footer-logo-svg {
+    transform: translateX(1px);
+    /* micro adjustments to align center point */
+}
+
+.footer-text-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-brand-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #0066FF;
+}
+
+.footer-copyright-text {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 500;
+    margin-top: 0.05rem;
+}
+
+/* Responsiveness media queries spacing */
+@media (max-width: 520px) {
+    .login-card-wrapper {
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+    }
+}
+
+/* System Dark Mode Support overlay */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-main: #f8fafc;
+        --text-muted: #cbd5e1;
+        --border-color: #334155;
+        --bg-main: #020617;
+        /* beautiful custom solid deep dark slate-950 area background */
+        --card-bg: #0f172a;
+        /* slate-900 card background */
+    }
+
+    body,
+    html {
+        background-color: var(--bg-main) !important;
+    }
+
+    .login-card-wrapper {
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 2px 10px rgba(0, 0, 0, 0.2), 0 0 1px rgba(255, 255, 255, 0.1);
+        border: 1px solid #1e293b;
+    }
+
+    .brand-title-gray {
+        color: #94a3b8;
+    }
+
+    .brand-subtitle {
+        color: #94a3b8;
+    }
+
+    .kcLabel {
+        color: #94a3b8;
+    }
+
+    .kcInput {
+        background: #1e293b;
+        color: #f8fafc;
+        border-color: #1e293b;
+    }
+
+    .kcInput::placeholder {
+        color: #64748b;
+    }
+
+    .kcInput:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.18);
+    }
+
+    .input-icon-left {
+        color: #64748b;
+    }
+
+    .kcPasswordVisibilityButton {
+        color: #64748b;
+    }
+
+    .kcPasswordVisibilityButton:hover {
+        color: #94a3b8;
+    }
+
+    .kcCheckbox label {
+        color: #cbd5e1;
+    }
+
+    .kcForgotPassword a {
+        color: #3b82f6;
+    }
+
+    .kcForgotPassword a:hover {
+        color: #60a5fa;
+    }
+
+    .kcSubmitButton {
+        background: #2563eb;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+        color: #ffffff;
+    }
+
+    .kcSubmitButton:hover {
+        background: #3b82f6;
+        box-shadow: 0 4px 18px rgba(59, 130, 246, 0.45);
+    }
+
+    .kcPasskeyButton {
+        background: #1e293b;
+        color: #cbd5e1;
+        border-color: #334155;
+    }
+
+    .kcPasskeyButton:hover {
+        background: #334155;
+        border-color: #475569;
+    }
+
+    .kcAlert {
+        border-color: transparent;
+    }
+
+    .kcAlertError {
+        background: #450a0a;
+        color: #fca5a5;
+    }
+
+    .kcAlertSuccess {
+        background: #064e3b;
+        color: #6ee7b7;
+    }
+
+    .footer-logo-circle {
+        background: #0f172a;
+        border-color: #3b82f6;
+    }
+
+    .footer-copyright-text {
+        color: #475569;
+    }
+}

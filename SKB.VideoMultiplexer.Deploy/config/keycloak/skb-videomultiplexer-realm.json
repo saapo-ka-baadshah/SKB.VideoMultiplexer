@@ -2,6 +2,7 @@
   "realm": "skb-videomultiplexer",
   "displayName": "SKB VideoMultiplexer",
   "enabled": true,
+  "loginTheme": "keycloakify-starter",
   "sslRequired": "none",
   "registrationAllowed": false,
   "loginWithEmailAllowed": true,

@@ -49,6 +49,7 @@ services:
     volumes:
       - keycloak_data:/opt/keycloak/data
       - ./config/keycloak:/opt/keycloak/data/import:ro
+      - ../SKB.VideoMultiplexer.KCLogin/dist_keycloak:/opt/keycloak/providers:ro
     networks:
       - multiplexer-net
     command: ["start-dev", "--import-realm"]
