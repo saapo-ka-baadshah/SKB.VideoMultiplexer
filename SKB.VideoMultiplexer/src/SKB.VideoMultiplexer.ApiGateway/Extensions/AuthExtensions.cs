@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+using SKB.App.SKB.VideoMultiplexer.ApiGateway.Extensions.Auth;
 
-namespace SKB.App.SKB.VideoMultiplexer.Http.Extensions;
+namespace SKB.App.SKB.VideoMultiplexer.ApiGateway.Extensions;
 
 /// <summary>
 /// Provides Auth Extensions to add authentication and authorisation.
@@ -28,6 +29,8 @@ public static class AuthExtensions
 		services.AddAuthentication(options =>
 		{
 			options.DefaultAuthenticateScheme = "Combined";
+			options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+			options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 			options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
 		})
 		.AddPolicyScheme("Combined", "Combined", options =>
@@ -42,7 +45,13 @@ public static class AuthExtensions
 				return CookieAuthenticationDefaults.AuthenticationScheme;
 			};
 		})
-		.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+		.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+		{
+			options.Cookie.Name = "__VideoMultiplexer-Auth";
+			options.Cookie.HttpOnly = true;
+			options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+			options.Cookie.SameSite = SameSiteMode.Strict;
+		})
 		.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
 		{
 			options.Authority = authority;
@@ -65,7 +74,7 @@ public static class AuthExtensions
 			options.GetClaimsFromUserInfoEndpoint = true;
 		});
 
-		services.AddAuthorization();
+		services.AddAuthorization(options => options.AddAuthPolicies());
 		return services;
 	}
 }

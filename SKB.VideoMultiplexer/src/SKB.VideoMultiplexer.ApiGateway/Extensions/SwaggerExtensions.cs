@@ -1,6 +1,6 @@
 using Microsoft.OpenApi.Models;
 
-namespace SKB.App.SKB.VideoMultiplexer.Http.Extensions;
+namespace SKB.App.SKB.VideoMultiplexer.ApiGateway.Extensions;
 
 /// <summary>
 /// Provides Swagger Extensions to add Swagger services and configure Swagger UI.

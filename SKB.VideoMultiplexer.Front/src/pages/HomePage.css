@@ -1,0 +1,34 @@
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 0 32px;
+  text-align: center;
+}
+
+.tagline {
+  max-width: 480px;
+  line-height: 1.6;
+  color: var(--text);
+  font-size: 17px;
+}
+
+.cta-btn {
+  display: inline-flex;
+  padding: 12px 28px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s;
+  margin-top: 12px;
+}
+
+.cta-btn:hover {
+  opacity: 0.85;
+}

@@ -1,9 +1,8 @@
 ﻿using JetBrains.Annotations;
-using Microsoft.OpenApi.Models;
-using SKB.App.SKB.VideoMultiplexer.Http.Extensions;
-using SKB.Core.Hosting.Extensions.WebApi;
+using SKB.App.SKB.VideoMultiplexer.ApiGateway.Extensions;
+using SKB.App.SKB.VideoMultiplexer.ApiGateway.Extensions.Cors;
 
-namespace SKB.App.SKB.VideoMultiplexer.Http;
+namespace SKB.App.SKB.VideoMultiplexer.ApiGateway;
 
 /// <summary>
 /// Public Start-point for the program
@@ -21,13 +20,17 @@ internal class Program
 
         // Add Configurations
         builder.AddConfigurations();
-        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddControllers();
+        builder.Services.AddCorsExtensions();
 
         // Add Authentication
         builder.Services.AddAuth(builder.Configuration);
 
         // Configure SwaggerGen by swashbuckle
         builder.Services.AddSwaggerGenWithAuth(builder.Configuration);
+
+        // Add YARP (Yet Another Reverse Proxy) service
+        builder.Services.AddYarpService(builder.Configuration);
 
         // Run the hosted application
         var app = builder.Build();
@@ -42,11 +45,14 @@ internal class Program
         }
 
         app.UseRouting();
+        app.UseCors(CorsStringConstants.DevelopmentPolicyName);
 
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.AddEndpoints<Program>();
+        app.MapControllers();
+
+        app.MapReverseProxy();
         app.Run();
     }
 }

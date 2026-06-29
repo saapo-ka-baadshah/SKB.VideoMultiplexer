@@ -1,18 +1,27 @@
+import { lazy, Suspense } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import ProtectedRoute from './components/ProtectedRoute'
+import LoadingFallback from './components/LoadingFallback'
+import HomePage from './pages/HomePage'
 import './App.css'
+
+const DashboardPage = lazy(() => import('./pages/DashboardPage'))
 
 function App() {
   return (
     <div className="app">
-      <nav className="navbar">
-        <div className="nav-brand">SKB.VideoMultiplexer</div>
-        <button className="login-btn">Login</button>
-      </nav>
-      <main className="main-content">
-        <h1>Combine multiple video streams into one</h1>
-        <p className="tagline">
-          Bring live video from your cameras, friends, or remote guests directly into a single composited output. 100% free and open-source.
-        </p>
-      </main>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/dashboard" element={
+          <Suspense fallback={<LoadingFallback />}>
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          </Suspense>
+        } />
+      </Routes>
     </div>
   )
 }

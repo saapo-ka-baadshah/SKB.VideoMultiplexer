@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace SKB.App.SKB.VideoMultiplexer.Http.Extensions;
+namespace SKB.App.SKB.VideoMultiplexer.ApiGateway.Extensions;
 
 /// <summary>
 /// Extends the Builder Extensions for Configuration

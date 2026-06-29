@@ -29,6 +29,7 @@
             <IncludeAssets>Build</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" />
+        <PackageReference Include="Yarp.ReverseProxy" />
     </ItemGroup>
 
     <ItemGroup>

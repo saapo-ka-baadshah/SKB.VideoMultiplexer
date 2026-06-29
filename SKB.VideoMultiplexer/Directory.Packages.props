@@ -13,5 +13,6 @@
     <PackageVersion Include="SKB.Core.Hosting" Version="9.0.3" />
     <PackageVersion Include="skb.core.licenseconfig" Version="9.0.2" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="9.0.4" />
+    <PackageVersion Include="Yarp.ReverseProxy" Version="2.3.0" />
   </ItemGroup>
 </Project>
